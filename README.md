@@ -277,6 +277,62 @@ class EditDialog : InteractorDialog<EditDialogMapper, EditDialogListener, Dialog
 }
 ```
 
+### Activity/Fragment
+Bind the ViewModel then call `observe(...)` in `onCreate(...)` . 
+```kotlin
+class MainActivity : AppCompatActivity() {
+    private val viewModel: DialogViewModel by lazy { ViewModelProviders.of(this).get(DialogViewModel::class.java) }
+}
+```
+
+Call `observe(...)` method to get the event listener from dialog. LifecycleOwner is required in this method.
+
+```kotlin
+class MainActivity : AppCompatActivity() {
+    private val viewModel: DialogViewModel by lazy { ViewModelProviders.of(this).get(DialogViewModel::class.java) }
+
+    companion object {
+        const val KEY_EDIT_NAME = "key_edit_name"
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+    	...
+    	viewModel.edit.observe(this, object : EditDialogListener {
+            override fun onEditSuccess(name: String?, key: String?, data: Bundle?) {
+                when (key) {
+                    KEY_EDIT_NAME -> editUserComplete(name)
+                }
+            }
+
+            override fun onEditFailure(error: String?, key: String?, data: Bundle?) {
+                when (key) {
+                    KEY_EDIT_NAME -> editUserFailure(error)
+                }
+            }
+        })
+    }
+
+    private fun showEditNameDialog() {
+    	val name = "Akexorcist"
+    	EditDialog.Builder()
+                .setName(name)
+                .setKey(KEY_EDIT_NAME)
+                .build()
+                .show(supportFragmentManager)
+    }
+
+    private fun editUserComplete(name: String?) {
+    	// Do something
+    }
+
+    private fun editUserFailure(error: String?) {
+    	// Do something
+    }
+}
+```
+
+When dialog show up and user done something in dialog with event listener. The event listener method that declared in `observe(...)` will be called. 
+
 For more information about using the library. See the example code.
 
 ## Licence
