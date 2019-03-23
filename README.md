@@ -8,7 +8,7 @@ When you have to create some dialog and send the result of dialog to the Activit
 
 When problem of this regular dialog is about listener will be lost when user rotate the screen (do anything that made configuration changes occur) and your Activity or Fragment won't get any event from dialog anymore because listener does not have configuration changes support. 
 
-รูปเรียก Dialog แบบปกติ
+![Dialog Interactor](https://raw.githubusercontent.com/akexorcist/Android-DialogInteractor/master/image/dialog_interactor-001.jpg)
 
 To solve this problem you have to use LiveData from Android Architecture Components instead of simple listener. But it's so hard to use it. We have write a lot of code to replace listener with LiveData. 
 
@@ -34,7 +34,7 @@ compile 'com.akexorcist:dialog-interactor:1.0.0'
 * Powered by ViewModel and LiveData (Android Architecture Components)
 
 ## How does it works?
-ภาพโครงสร้างทั้งหมด
+![Dialog Interactor](https://raw.githubusercontent.com/akexorcist/Android-DialogInteractor/master/image/dialog_interactor-002.jpg)
 
 Activity/Fragment call the dialog directly like regular dialog but event listener from dialog will be converted to LiveData by Mapper. This LiveData will be used by ViewModel. Activity/Fragment that observe the ViewModel will retrieve the data. But before that, Mapper will convert the LiveData back to listener that made the code in Activity/Fragment easier to handle than LiveData
 
@@ -160,7 +160,7 @@ class EditDialogMapper : EventMapper<EditDialogListener>() {
 * `toEvent(...)` Convert event listener to LiveData's event
 * `toListener(...)` Convert LiveData's event to event listener
 
-<ภาพรวมแบบมีบอก toEvent toListener>
+![Dialog Interactor](https://raw.githubusercontent.com/akexorcist/Android-DialogInteractor/master/image/dialog_interactor-003.jpg)
 
 In `toEvent(...)` , create then DialogEvent for LiveData's event. 
 
