@@ -289,8 +289,8 @@ Call `observe(...)` method to get the event listener from dialog. LifecycleOwner
 
 ```kotlin
 class MainActivity : AppCompatActivity() {
-    private val viewModel: DialogViewModel by lazy { ViewModelProviders.of(this).get(DialogViewModel::class.java) }
-
+    ...
+    
     companion object {
         const val KEY_EDIT_NAME = "key_edit_name"
     }
