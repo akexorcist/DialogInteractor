@@ -4,10 +4,9 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
+import com.akexorcist.library.dialoginteractor.sample.dialog.DialogManager
 import com.akexorcist.library.dialoginteractor.sample.dialog.DialogViewModel
-import com.akexorcist.library.dialoginteractor.sample.dialog.alert.AlertDialog
 import com.akexorcist.library.dialoginteractor.sample.dialog.alert.AlertListener
-import com.akexorcist.library.dialoginteractor.sample.dialog.confirm.ConfirmDialog
 import com.akexorcist.library.dialoginteractor.sample.dialog.confirm.ConfirmListener
 import com.akexorcist.library.dialoginteractor.sample.dialog.edit.EditDialog
 import com.akexorcist.library.dialoginteractor.sample.dialog.edit.EditListener
@@ -32,57 +31,58 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         buttonAlertSimpleMessage.setOnClickListener {
-            AlertDialog.Builder()
-                    .setMessage(getString(R.string.simple_message))
-                    .setKey(KEY_SIMPLE_MESSAGE)
-                    .build()
-                    .show(supportFragmentManager)
+            DialogManager.showAlert(
+                message = getString(R.string.simple_message),
+                key = KEY_SIMPLE_MESSAGE,
+                fragmentManager = supportFragmentManager
+            )
         }
 
         buttonUserInfoAlert.setOnClickListener {
             val name = "Akexorcist"
-            AlertDialog.Builder()
-                    .setMessage(getString(R.string.hello_to_user, name))
-                    .setKey(KEY_SHOW_USER_INFO)
-                    .setData(Bundle().apply {
-                        putString(EXTRA_USER_NAME, name)
-                    })
-                    .build()
-                    .show(supportFragmentManager)
+
+            DialogManager.showAlert(
+                message = getString(R.string.hello_to_user, name),
+                key = KEY_SHOW_USER_INFO,
+                data = Bundle().apply {
+                    putString(EXTRA_USER_NAME, name)
+                },
+                fragmentManager = supportFragmentManager
+            )
         }
 
         buttonConfirmDeleteUser.setOnClickListener {
             val user = User(
-                    id = "0000001",
-                    name = "Akexorcist",
-                    age = 28
+                id = "0000001",
+                name = "Akexorcist",
+                age = 28
             )
-            ConfirmDialog.Builder()
-                    .setTitle(getString(R.string.delete_user_information_title, user.name))
-                    .setMessage(getString(R.string.delete_user_information_message))
-                    .setKey(KEY_CONFIRM_DELETE_USER)
-                    .setData(Bundle().apply {
-                        putParcelable(EXTRA_USER_INFO, user)
-                    })
-                    .build()
-                    .show(supportFragmentManager)
+            DialogManager.showConfirm(
+                title = getString(R.string.delete_user_information_title, user.name),
+                message = getString(R.string.delete_user_information_message),
+                key = KEY_CONFIRM_DELETE_USER,
+                data = Bundle().apply {
+                    putParcelable(EXTRA_USER_INFO, user)
+                },
+                fragmentManager = supportFragmentManager
+            )
         }
 
         buttonEditUserInfo.setOnClickListener {
             val user = User(
-                    id = "0000001",
-                    name = "Akexorcist",
-                    age = 28
+                id = "0000001",
+                name = "Akexorcist",
+                age = 28
             )
-            EditDialog.Builder()
-                    .setMessage(getString(R.string.change_the_name))
-                    .setUser(user)
-                    .setKey(KEY_EDIT_USER_INFO)
-                    .setData(Bundle().apply {
-                        putParcelable(EditDialog.EXTRA_USER, user)
-                    })
-                    .build()
-                    .show(supportFragmentManager)
+            DialogManager.showEdit(
+                message = getString(R.string.change_the_name),
+                user = user,
+                key = KEY_EDIT_USER_INFO,
+                data = Bundle().apply {
+                    putParcelable(EditDialog.EXTRA_USER, user)
+                },
+                fragmentManager = supportFragmentManager
+            )
         }
 
         viewModel.alert.observe(this, object : AlertListener {
@@ -151,7 +151,8 @@ class MainActivity : AppCompatActivity() {
     private fun editUserComplete(newUser: User?, data: Bundle?) {
         val oldUser: User? = data?.getParcelable(EditDialog.EXTRA_USER)
         if (newUser != null && oldUser != null) {
-            Toast.makeText(this, getString(R.string.user_name_changed, oldUser.name, newUser.name), Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.user_name_changed, oldUser.name, newUser.name), Toast.LENGTH_SHORT)
+                .show()
         }
     }
 
