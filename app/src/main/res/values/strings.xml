@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">Dialog Interactor</string>
+    <string name="ok">OK</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+
+    <string name="menu_simple_message">Simple Message</string>
+    <string name="menu_user_info">Show User Info</string>
+    <string name="menu_delete_user">Delete User</string>
+    <string name="menu_edit_user_info">Change User Name</string>
+
+    <string name="section_alert_dialog">Alert Dialog</string>
+    <string name="section_confirm_dialog">Confirm Dialog</string>
+    <string name="section_edit_dialog">Edit Dialog</string>
+
+    <string name="simple_message">Welcome to my dialog interactor</string>
+    <string name="hello_to_user">Hello, %1$s</string>
+    <string name="alert_user_information_completed">Alert for %1$s has completed</string>
+    <string name="delete_user_information_title">Delete %1$s?</string>
+    <string name="delete_user_information_message">This user data will be gone forever</string>
+    <string name="user_information_deleted">Farewell! %1$s</string>
+    <string name="user_information_alive">Yeah! %1$s still alive</string>
+    <string name="change_the_name">Change the name</string>
+    <string name="edit_user_info_cancel">Edit user info has cancelled</string>
+    <string name="user_info_not_found">User information not found</string>
+    <string name="user_name_not_changed">You did not change the name</string>
+    <string name="user_name_changed">Your name has changed from %1$s to %2$s</string>
+</resources>

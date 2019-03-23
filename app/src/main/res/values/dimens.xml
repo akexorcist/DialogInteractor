@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="menu_width">250dp</dimen>
+    <dimen name="dialog_container_padding">32dp</dimen>
+    <dimen name="button_margin_top">24dp</dimen>
+    <dimen name="message_margin_top">12dp</dimen>
+    <dimen name="text_size">14sp</dimen>
+    <dimen name="title_size">20sp</dimen>
+</resources>
