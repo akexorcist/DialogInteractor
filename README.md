@@ -19,7 +19,7 @@ And that is the reason why I built this library.
 ## Download
 **Gradle**
 ```
-compile 'com.akexorcist:dialog-interactor:1.0.0'
+implementation 'com.akexorcist:dialog-interactor:1.0.0'
 ```
 
 ## Feature
