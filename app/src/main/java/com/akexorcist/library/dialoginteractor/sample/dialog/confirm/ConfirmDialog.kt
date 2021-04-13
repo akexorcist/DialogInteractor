@@ -6,11 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import com.akexorcist.library.dialoginteractor.InteractorDialog
 import com.akexorcist.library.dialoginteractor.createBundle
-import com.akexorcist.library.dialoginteractor.sample.R
+import com.akexorcist.library.dialoginteractor.sample.databinding.DialogConfirmBinding
 import com.akexorcist.library.dialoginteractor.sample.dialog.DialogViewModel
-import kotlinx.android.synthetic.main.dialog_confirm.*
 
 class ConfirmDialog : InteractorDialog<ConfirmMapper, ConfirmListener, DialogViewModel>() {
+    private lateinit var binding: DialogConfirmBinding
     private var title: String? = null
     private var message: String? = null
 
@@ -38,18 +38,20 @@ class ConfirmDialog : InteractorDialog<ConfirmMapper, ConfirmListener, DialogVie
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-        inflater.inflate(R.layout.dialog_confirm, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        binding = DialogConfirmBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        textViewTitle.text = title ?: ""
-        textViewMessage.text = message ?: ""
-        buttonConfirm.setOnClickListener {
+        binding.textViewTitle.text = title ?: ""
+        binding.textViewMessage.text = message ?: ""
+        binding.buttonConfirm.setOnClickListener {
             getListener().onConfirmButtonClick(getKey(), getData())
             dismiss()
         }
-        buttonCancel.setOnClickListener {
+        binding.buttonCancel.setOnClickListener {
             getListener().onCancelButtonClick(getKey(), getData())
             dismiss()
         }
@@ -87,6 +89,6 @@ class ConfirmDialog : InteractorDialog<ConfirmMapper, ConfirmListener, DialogVie
             this.data = data
         }
 
-        fun build(): ConfirmDialog = ConfirmDialog.newInstance(title, message, key, data)
+        fun build(): ConfirmDialog = newInstance(title, message, key, data)
     }
 }

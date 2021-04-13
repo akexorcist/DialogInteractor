@@ -3,7 +3,8 @@ package com.akexorcist.library.dialoginteractor.sample
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
+import com.akexorcist.library.dialoginteractor.sample.databinding.ActivityMainBinding
 import com.akexorcist.library.dialoginteractor.sample.dialog.DialogManager
 import com.akexorcist.library.dialoginteractor.sample.dialog.DialogViewModel
 import com.akexorcist.library.dialoginteractor.sample.dialog.alert.AlertListener
@@ -11,10 +12,14 @@ import com.akexorcist.library.dialoginteractor.sample.dialog.confirm.ConfirmList
 import com.akexorcist.library.dialoginteractor.sample.dialog.edit.EditDialog
 import com.akexorcist.library.dialoginteractor.sample.dialog.edit.EditListener
 import com.akexorcist.library.dialoginteractor.sample.vo.User
-import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-    private val viewModel: DialogViewModel by lazy { ViewModelProviders.of(this).get(DialogViewModel::class.java) }
+    private val binding: ActivityMainBinding by lazy {
+        ActivityMainBinding.inflate(layoutInflater)
+    }
+    private val viewModel: DialogViewModel by lazy {
+        ViewModelProvider(this).get(DialogViewModel::class.java)
+    }
 
     companion object {
         const val KEY_SIMPLE_MESSAGE = "com.akexorcist.library.dialoginteractor.sample.key_simple_message"
@@ -30,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        buttonAlertSimpleMessage.setOnClickListener {
+        binding.buttonAlertSimpleMessage.setOnClickListener {
             DialogManager.showAlert(
                 message = getString(R.string.simple_message),
                 key = KEY_SIMPLE_MESSAGE,
@@ -38,7 +43,7 @@ class MainActivity : AppCompatActivity() {
             )
         }
 
-        buttonUserInfoAlert.setOnClickListener {
+        binding.buttonUserInfoAlert.setOnClickListener {
             val name = "Akexorcist"
 
             DialogManager.showAlert(
@@ -51,7 +56,7 @@ class MainActivity : AppCompatActivity() {
             )
         }
 
-        buttonConfirmDeleteUser.setOnClickListener {
+        binding.buttonConfirmDeleteUser.setOnClickListener {
             val user = User(
                 id = "0000001",
                 name = "Akexorcist",
@@ -68,7 +73,7 @@ class MainActivity : AppCompatActivity() {
             )
         }
 
-        buttonEditUserInfo.setOnClickListener {
+        binding.buttonEditUserInfo.setOnClickListener {
             val user = User(
                 id = "0000001",
                 name = "Akexorcist",

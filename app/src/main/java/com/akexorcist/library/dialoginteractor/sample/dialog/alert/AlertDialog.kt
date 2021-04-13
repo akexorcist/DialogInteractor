@@ -6,11 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import com.akexorcist.library.dialoginteractor.InteractorDialog
 import com.akexorcist.library.dialoginteractor.createBundle
-import com.akexorcist.library.dialoginteractor.sample.R
+import com.akexorcist.library.dialoginteractor.sample.databinding.DialogAlertBinding
 import com.akexorcist.library.dialoginteractor.sample.dialog.DialogViewModel
-import kotlinx.android.synthetic.main.dialog_alert.*
 
 class AlertDialog : InteractorDialog<AlertMapper, AlertListener, DialogViewModel>() {
+    private lateinit var binding: DialogAlertBinding
     private var message: String? = null
 
     companion object {
@@ -31,13 +31,15 @@ class AlertDialog : InteractorDialog<AlertMapper, AlertListener, DialogViewModel
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-        inflater.inflate(R.layout.dialog_alert, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        binding = DialogAlertBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        textViewMessage.text = message ?: ""
-        buttonOk.setOnClickListener {
+        binding.textViewMessage.text = message ?: ""
+        binding.buttonOk.setOnClickListener {
             getListener().onOkButtonClick(getKey(), getData())
             dismiss()
         }
@@ -69,6 +71,6 @@ class AlertDialog : InteractorDialog<AlertMapper, AlertListener, DialogViewModel
             this.message = message
         }
 
-        fun build(): AlertDialog = AlertDialog.newInstance(message, key, data)
+        fun build(): AlertDialog = newInstance(message, key, data)
     }
 }

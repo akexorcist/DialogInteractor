@@ -8,11 +8,12 @@ import android.widget.Toast
 import com.akexorcist.library.dialoginteractor.InteractorDialog
 import com.akexorcist.library.dialoginteractor.createBundle
 import com.akexorcist.library.dialoginteractor.sample.R
+import com.akexorcist.library.dialoginteractor.sample.databinding.DialogEditBinding
 import com.akexorcist.library.dialoginteractor.sample.dialog.DialogViewModel
 import com.akexorcist.library.dialoginteractor.sample.vo.User
-import kotlinx.android.synthetic.main.dialog_edit.*
 
 class EditDialog : InteractorDialog<EditMapper, EditListener, DialogViewModel>() {
+    private lateinit var binding: DialogEditBinding
     private var message: String? = null
     private var user: User? = null
 
@@ -43,21 +44,23 @@ class EditDialog : InteractorDialog<EditMapper, EditListener, DialogViewModel>()
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-        inflater.inflate(R.layout.dialog_edit, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        binding = DialogEditBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        buttonConfirm.setOnClickListener {
+        binding.buttonConfirm.setOnClickListener {
             onConfirmButtonClick()
         }
 
-        buttonCancel.setOnClickListener {
+        binding.buttonCancel.setOnClickListener {
             onCancelButtonClick()
         }
 
-        textViewMessage.text = message ?: ""
+        binding.textViewMessage.text = message ?: ""
 
         if (savedInstanceState == null) {
             fillUserName()
@@ -76,7 +79,7 @@ class EditDialog : InteractorDialog<EditMapper, EditListener, DialogViewModel>()
 
     private fun fillUserName() {
         user?.let {
-            editTextName.setText(it.name)
+            binding.editTextName.setText(it.name)
         } ?: run {
             onEmptyUserInfo()
             dismiss()
@@ -84,7 +87,7 @@ class EditDialog : InteractorDialog<EditMapper, EditListener, DialogViewModel>()
     }
 
     private fun onConfirmButtonClick() {
-        val name = editTextName.text.toString()
+        val name = binding.editTextName.text.toString()
         user?.let {
             if (name == it.name) {
                 onNameNotChanged()
@@ -140,6 +143,6 @@ class EditDialog : InteractorDialog<EditMapper, EditListener, DialogViewModel>()
             this.data = data
         }
 
-        fun build(): EditDialog = EditDialog.newInstance(message, user, key, data)
+        fun build(): EditDialog = newInstance(message, user, key, data)
     }
 }
