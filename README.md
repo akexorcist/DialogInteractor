@@ -1,4 +1,6 @@
-[ ![Download](https://api.bintray.com/packages/akexorcist/maven/dialog-interactor/images/download.svg?version=1.0.0) ](https://bintray.com/akexorcist/maven/dialog-interactor/1.0.0/link)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.akexorcist/dialog-interactor/badge.svg)](https://search.maven.org/artifact/com.akexorcist/dialog-interactor) 
+![Minimum SDK Version](https://img.shields.io/badge/minSdkVersion-18-brightgreen) 
+[![Workflow Status](https://github.com/akexorcist/DialogInteractor/actions/workflows/android.yml/badge.svg)](https://github.com/akexorcist/DialogInteractor/actions)
 
 Dialog Interactor
 Interactor between dialog and activity or fragment that support lifecycle awareness by Android Architecture Components's LiveData
@@ -15,16 +17,7 @@ To solve this problem you have to use LiveData from Android Architecture Compone
 And that is the reason why I built this library.
 
 ## Download
-Maven
-```
-<dependency>
-  <groupId>com.akexorcist</groupId>
-  <artifactId>dialog-interactor</artifactId>
-  <version>1.0.0</version>
-</dependency>
-```
-
-Gradle
+**Gradle**
 ```
 compile 'com.akexorcist:dialog-interactor:1.0.0'
 ```
@@ -178,7 +171,7 @@ val event = DialogEvent.Builder(
 
 ```kotlin
 val event = DialogEvent.Builder(
-    ...
+    /* ... */
     data = data?.apply {
         putString(EditDialog.EXTRA_EDITED_NAME, error)
         // More data 
@@ -195,7 +188,7 @@ when (event.getEvent()) {
         key = event.getKey(), 
         data = event.getData()
     )
-    EVENT_FAILURE -> ...
+    EVENT_FAILURE -> /* ... */
 }
 ```
 
@@ -220,14 +213,13 @@ class EditDialog : InteractorDialog<EditDialogMapper, EditDialogListener, Dialog
 }
 ```
 
-`InteractorDialog` has 2 abstract methods. `bindViewModel()`  for binding the ViewModel class and `bindLauncher(...)` for binding the DialogLauncher in ViewModel
+`InteractorDialog` has 2 abstract methods. `bindViewModel()` for binding the ViewModel class and `bindLauncher(...)` for binding the DialogLauncher in ViewModel
 
 I do not talk too much about the dialog builder because you are already familiar with the dialog before. But `key` and `data` are required in dialog builder also.
 
 ```kotlin
 class EditDialog : InteractorDialog<EditDialogMapper, EditDialogListener, DialogViewModel>() {
-	...
-
+	/* ... */
 	companion object {
 		const val EXTRA_NAME = "extra_name"
 
@@ -237,9 +229,7 @@ class EditDialog : InteractorDialog<EditDialogMapper, EditDialogListener, Dialog
 	            }
 	        }
 	 }
-
-	...
-
+	/* ... */
     class Builder {
         private var name: String? = null
         private var key: String? = null
@@ -289,14 +279,13 @@ Call `observe(...)` method to get the event listener from dialog. LifecycleOwner
 
 ```kotlin
 class MainActivity : AppCompatActivity() {
-    ...
-    
+    /* ... */
     companion object {
         const val KEY_EDIT_NAME = "key_edit_name"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-    	...
+    	/* ... */
     	viewModel.edit.observe(this, object : EditDialogListener {
             override fun onEditSuccess(name: String?, key: String?, data: Bundle?) {
                 when (key) {
@@ -336,8 +325,10 @@ When dialog show up and user done something in dialog with event listener. The e
 For more information about using the library. See the example code.
 
 ## Licence
-Copyright 2019 Akexorcist
-Licensed under the Apache License, Version 2.0 (the "License"); you may not use this work except in compliance with the License. You may obtain a copy of the License in the LICENSE file, or at:
- [http://www.apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0) 
-Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+Copyright 2021 Akexorcist
 
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this work except in compliance with the License. You may obtain a copy of the License in the LICENSE file, or at:
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
